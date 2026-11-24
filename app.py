@@ -162,36 +162,36 @@ CATEGORY_IMAGES = {
     "Uniforms & Merch": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=700&q=80"
 }
 
-# Initialize session state listings
+# Default sample listings
 if "listings" not in st.session_state:
     st.session_state.listings = [
         {
-            "title": "Oswaal Class 10 Sample Papers",
+            "title": "Oswaal CBSE Class 10 Question Bank",
             "category": "Books & Notes",
             "type": "Swap",
             "payment_method": "Item Swap",
-            "locality": "Prestige Lakeside Habitat (Tower 5)",
+            "locality": "Bedford, Coonoor",
             "price": "Swap for Class 10 RD Sharma",
             "owner": "Aarav (Class 10)",
             "image": CATEGORY_IMAGES["Books & Notes"]
         },
         {
-            "title": "Scientific Calculator Casio fx-991ES",
+            "title": "Casio fx-991ES Plus Scientific Calculator",
             "category": "Gadgets & Calculators",
             "type": "Sell",
             "payment_method": "Real Cash",
-            "locality": "Allen Career Institute (Koramangala)",
+            "locality": "Barracks Area, Wellington",
             "price": "INR 450",
             "owner": "Rohan (Class 12)",
             "image": CATEGORY_IMAGES["Gadgets & Calculators"]
         },
         {
-            "title": "Yonex Nanoray Badminton Racket",
+            "title": "Yonex Nanoray Light Badminton Racket",
             "category": "Sports Gear",
             "type": "Sell",
             "payment_method": "Exchange Points",
-            "locality": "Sobha Forest View (Clubhouse Block)",
-            "price": "550 Exchange Points",
+            "locality": "Upper Coonoor (Sim's Park Area)",
+            "price": "400 Exchange Points",
             "owner": "Priya (Class 11)",
             "image": CATEGORY_IMAGES["Sports Gear"]
         }
@@ -273,7 +273,7 @@ elif menu == "List an Item":
             payment_method = "Item Swap"
             price = st.text_input("Desired Item in Return (e.g., Class 11 Chemistry NCERT)")
             
-        locality = st.text_input("Locality / Society / Campus (e.g., Sobha Arena, Block B)")
+        locality = st.text_input("Locality / Society / Campus (e.g., Sim's Park, Coonoor)")
         owner = st.text_input("Your Name and Class (e.g., Kabir - 11B)")
         parent_phone = st.text_input("Parent WhatsApp Contact (Required for verification)")
         
