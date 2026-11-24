@@ -209,11 +209,11 @@ if menu == "Browse Marketplace":
     with col_filter_payment:
         filter_payment = st.selectbox("Filter by Payment / Exchange Method", ["All", "Real Cash", "Exchange Points", "Item Swap"])
     
-    # Filter items
+    # Filter items safely using .get()
     filtered_items = [
         item for item in st.session_state.listings 
-        if (filter_type == "All" or item["type"] == filter_type) and
-           (filter_payment == "All" or item["payment_method"] == filter_payment)
+        if (filter_type == "All" or item.get("type") == filter_type) and
+           (filter_payment == "All" or item.get("payment_method", "Item Swap") == filter_payment)
     ]
     
     if not filtered_items:
@@ -223,29 +223,37 @@ if menu == "Browse Marketplace":
     cols = st.columns(2)
     for idx, item in enumerate(filtered_items):
         with cols[idx % 2]:
+            locality = item.get("locality", "Campus Hub")
+            payment_method = item.get("payment_method", "Item Swap")
+            image_url = item.get("image", CATEGORY_IMAGES.get(item.get("category"), CATEGORY_IMAGES["Books & Notes"]))
+            owner_name = item.get("owner", "Student")
+            price_val = item.get("price", "Swap")
+            item_title = item.get("title", "Item")
+            category_val = item.get("category", "General")
+
             st.markdown(f"""
             <div class="swap-card">
-                <img class="card-img" src="{item.get('image', CATEGORY_IMAGES['Books & Notes'])}" alt="{item['title']}">
+                <img class="card-img" src="{image_url}" alt="{item_title}">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                    <span class="badge-location">{item.get('locality', 'Campus Hub')}</span>
+                    <span class="badge-location">{locality}</span>
                     <span class="badge-verified">Parent Verified</span>
                 </div>
-                <div class="item-title">{item['title']}</div>
-                <div class="item-category">{item['category']}</div>
-                <div class="item-meta">Seller: {item['owner']}</div>
+                <div class="item-title">{item_title}</div>
+                <div class="item-category">{category_val}</div>
+                <div class="item-meta">Seller: {owner_name}</div>
                 <div style="margin-top: 6px;">
-                    <span class="badge-method">Method: {item['payment_method']}</span>
+                    <span class="badge-method">Method: {payment_method}</span>
                 </div>
                 <div class="card-footer">
                     <div>
-                        <span class="price-tag">{item['price']}</span>
+                        <span class="price-tag">{price_val}</span>
                     </div>
                 </div>
             </div>
             """, unsafe_allow_html=True)
             
-            if st.button(f"Request {item['title']}", key=f"req_{idx}_{item['title']}"):
-                st.success(f"Request confirmed. A WhatsApp parent approval alert has been sent for {item['title']}.")
+            if st.button(f"Request {item_title}", key=f"req_{idx}_{item_title}"):
+                st.success(f"Request confirmed. A WhatsApp parent approval alert has been sent for {item_title}.")
             st.write("")
 
 elif menu == "List an Item":
